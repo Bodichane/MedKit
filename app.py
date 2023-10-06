@@ -1,14 +1,39 @@
-from flet import *
-from views import views_handler
+import flet as ft
 
+def main(page: ft.Page):
+    page.title = "Routes Example"
 
-def main:
     def route_change(route):
-        print(page.route)
         page.views.clear()
         page.views.append(
-            views_handler(page)[page.route]
+            ft.View(
+                "/",
+                [
+                    ft.AppBar(title=ft.Text("MedKit"), bgcolor=ft.colors.SURFACE_VARIANT),
+                    ft.ElevatedButton("Start", on_click=lambda _: page.go("/store")),
+                ],
+            )
         )
+        if page.route == "/store":
+            page.views.append(
+                ft.View(
+                    "/store",
+                    [
+                        ft.AppBar(title=ft.Text("Store"), bgcolor=ft.colors.SURFACE_VARIANT),
+                        ft.ElevatedButton("Go Home", on_click=lambda _: page.go("/")),
+                    ],
+                )
+            )
+        page.update()
 
-    page.on_route_change  = route_change
-    page.go('/')
+    def view_pop(view):
+        page.views.pop()
+        top_view = page.views[-1]
+        page.go(top_view.route)
+
+    page.on_route_change = route_change
+    page.on_view_pop = view_pop
+    page.go(page.route)
+
+
+ft.app(target=main, view=ft.AppView.WEB_BROWSER)
