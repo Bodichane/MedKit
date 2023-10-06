@@ -10,16 +10,16 @@ def main(page: ft.Page):
                 "/",
                 [
                     ft.AppBar(title=ft.Text("MedKit"), bgcolor=ft.colors.SURFACE_VARIANT),
-                    ft.ElevatedButton("Start", on_click=lambda _: page.go("/store")),
+                    ft.ElevatedButton("Start", on_click=lambda _: page.go("/main")),
                 ],
             )
         )
-        if page.route == "/store":
+        if page.route == "/main":
             page.views.append(
                 ft.View(
-                    "/store",
+                    "/main",
                     [
-                        ft.AppBar(title=ft.Text("Store"), bgcolor=ft.colors.SURFACE_VARIANT),
+                        ft.AppBar(title=ft.Text(""), bgcolor=ft.colors.SURFACE_VARIANT),
                         ft.ElevatedButton("Go Home", on_click=lambda _: page.go("/")),
                     ],
                 )
